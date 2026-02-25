@@ -57,20 +57,22 @@
       <section class="container workflows" aria-label="Advisor workflow">
         <article class="workflow-card">
           <h3>Send to Advisor</h3>
-          <p>Create a prefilled email with selected programs and your notes.</p>
+          <p>Send your selected programs and questions directly to an advisor.</p>
           <form id="advisorForm" class="advisor-form">
             <label for="advisorName">Your name</label>
             <input id="advisorName" name="advisorName" type="text" placeholder="Jane Smith" />
 
             <label for="advisorEmail">Your email</label>
-            <input id="advisorEmail" name="advisorEmail" type="email" placeholder="jane@bu.edu" />
+            <input id="advisorEmail" name="advisorEmail" type="email" placeholder="jane@bu.edu" required />
 
             <input id="advisorRecipient" name="advisorRecipient" type="hidden" value="buvem@bu.edu" />
+            <input id="advisorCompany" name="advisorCompany" type="text" tabindex="-1" autocomplete="off" class="hp-field" aria-hidden="true" />
 
             <label for="advisorNotes">Notes / questions</label>
             <textarea id="advisorNotes" name="advisorNotes" rows="4" placeholder="What scholarships are available for part-time students?"></textarea>
 
             <button id="sendAdvisor" class="btn" type="submit">Request Info</button>
+            <p id="advisorStatus" class="advisor-status" role="status" aria-live="polite"></p>
             <p class="consent-text">
               I acknowledge that, by clicking the 'Request Info', I consent to representatives of Boston University and its partners contacting me about educational opportunities via email, text, or phone, at the phone number above, including my mobile phone, using an automatic dialer, or pre-recorded message. Message and data rates may apply. I understand that my consent is not a requirement for enrollment, and I may withdraw my consent at any time.
             </p>
@@ -94,5 +96,21 @@
     </footer>
 
     <script src="app.js"></script>
+    <script>
+      function sendHeight() {
+        const height = document.documentElement.scrollHeight;
+        window.parent.postMessage(
+          { type: "resize", height: height },
+          "*"
+        );
+      }
+
+      window.addEventListener("load", sendHeight);
+      window.addEventListener("resize", sendHeight);
+
+      // Optional: observe dynamic content changes
+      const observer = new ResizeObserver(sendHeight);
+      observer.observe(document.body);
+    </script>
   </body>
 </html>

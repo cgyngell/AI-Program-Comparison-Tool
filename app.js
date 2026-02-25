@@ -112,6 +112,8 @@ const selectionSummary = document.getElementById("selectionSummary");
 const clearSelectionBtn = document.getElementById("clearSelection");
 const copyShareLinkBtn = document.getElementById("copyShareLink");
 const advisorForm = document.getElementById("advisorForm");
+const sendAdvisorBtn = document.getElementById("sendAdvisor");
+const advisorStatus = document.getElementById("advisorStatus");
 
 const tableHead = document.querySelector("#comparisonTable thead");
 const tableBody = document.querySelector("#comparisonTable tbody");
@@ -306,20 +308,7 @@ async function copyShareLink() {
   }
 }
 
-function sendToAdvisor(event) {
-  event.preventDefault();
-  const selected = selectionPrograms();
-  if (!selected.length) {
-    window.alert("Select at least one program before requesting info.");
-    return;
-  }
-
-  const formData = new FormData(advisorForm);
-  const fromName = (formData.get("advisorName") || "").toString().trim();
-  const fromEmail = (formData.get("advisorEmail") || "").toString().trim();
-  const recipient = (formData.get("advisorRecipient") || "buvem@bu.edu").toString().trim();
-  const notes = (formData.get("advisorNotes") || "").toString().trim();
-
+function buildAdvisorMailtoLink(recipient, selected, fromName, fromEmail, notes) {
   const subject = "BU Online Program Information Request";
   const selectedList = selected.map((program) => `- ${program.title}`).join("\n");
   const body = [
@@ -337,7 +326,71 @@ function sendToAdvisor(event) {
     `Comparison link: ${window.location.href}`
   ].join("\n");
 
-  window.location.href = `mailto:${encodeURIComponent(recipient)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  return `mailto:${encodeURIComponent(recipient)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+async function sendToAdvisor(event) {
+  event.preventDefault();
+  const selected = selectionPrograms();
+  if (!selected.length) {
+    window.alert("Select at least one program before requesting info.");
+    return;
+  }
+
+  const formData = new FormData(advisorForm);
+  const fromName = (formData.get("advisorName") || "").toString().trim();
+  const fromEmail = (formData.get("advisorEmail") || "").toString().trim();
+  const recipient = (formData.get("advisorRecipient") || "buvem@bu.edu").toString().trim();
+  const notes = (formData.get("advisorNotes") || "").toString().trim();
+  const honey = (formData.get("advisorCompany") || "").toString().trim();
+
+  if (!fromEmail) {
+    window.alert("Please enter your email address.");
+    return;
+  }
+
+  sendAdvisorBtn.disabled = true;
+  sendAdvisorBtn.textContent = "Sending...";
+  advisorStatus.textContent = "Sending your request...";
+  advisorStatus.className = "advisor-status pending";
+
+  const payload = {
+    fromName,
+    fromEmail,
+    notes,
+    honey,
+    comparisonLink: window.location.href,
+    selectedPrograms: selected.map((program) => program.title)
+  };
+
+  try {
+    const response = await fetch("/api/send-advisor-request", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      const data = await response.json().catch(() => ({}));
+      const message = data.error || "Unable to send right now. Please try again.";
+      throw new Error(message);
+    }
+
+    advisorStatus.textContent = "Request sent. An advisor should follow up shortly.";
+    advisorStatus.className = "advisor-status success";
+    advisorForm.reset();
+  } catch (error) {
+    advisorStatus.textContent = "Direct send unavailable. Opening your email app as fallback...";
+    advisorStatus.className = "advisor-status error";
+    const mailtoLink = buildAdvisorMailtoLink(recipient, selected, fromName, fromEmail, notes);
+    window.location.href = mailtoLink;
+  } finally {
+    sendAdvisorBtn.disabled = false;
+    sendAdvisorBtn.textContent = "Request Info";
+  }
+
 }
 
 function rerender() {

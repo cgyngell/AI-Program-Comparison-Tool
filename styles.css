@@ -316,6 +316,32 @@ thead th:first-child {
   font: inherit;
 }
 
+.hp-field {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.advisor-status {
+  margin: 0.25rem 0 0;
+  min-height: 1.2rem;
+  font-size: 0.9rem;
+}
+
+.advisor-status.pending {
+  color: #465770;
+}
+
+.advisor-status.success {
+  color: #0a6a3a;
+}
+
+.advisor-status.error {
+  color: #9d1c1c;
+}
+
 .consent-text {
   margin: 0.5rem 0 0;
   color: var(--muted);
