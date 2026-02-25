@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 190" role="img" aria-labelledby="title desc">
+  <title id="title">Boston University logo</title>
+  <desc id="desc">Red rectangular logo with white Boston University lettering.</desc>
+  <rect width="420" height="190" fill="#d72d49"/>
+  <rect x="8" y="8" width="404" height="174" fill="none" stroke="#ffffff" stroke-width="2"/>
+  <text x="20" y="85" fill="#ffffff" font-size="56" font-family="Georgia, 'Times New Roman', serif" letter-spacing="2">BOSTON</text>
+  <text x="20" y="150" fill="#ffffff" font-size="50" font-family="Georgia, 'Times New Roman', serif" letter-spacing="1">UNIVERSITY</text>
+</svg>
