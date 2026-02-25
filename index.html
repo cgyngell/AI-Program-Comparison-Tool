@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BU AI Program Comparison Tool</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <img class="brand-logo" src="assets/bu-logo.jpg" alt="Boston University" />
+        <div>
+          <p class="brand-kicker">Boston University Virtual</p>
+          <h1 class="brand-title">AI Program Comparison Tool</h1>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero__content">
+          <p class="eyebrow">Online Programs</p>
+          <h2>Compare BU’s AI Cluster Programs Side-by-Side</h2>
+          <p>Compare these 6 programs: 5 AI cluster programs plus the Online MS in Data Science.</p>
+          <div class="hero__actions">
+            <button id="clearSelection" class="btn btn--light" type="button">Clear Selection</button>
+            <button id="copyShareLink" class="btn" type="button">Copy Share Link</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="container">
+        <div id="selectionSummary" class="selection-summary" aria-live="polite"></div>
+        <div id="programGrid" class="program-grid"></div>
+      </section>
+
+      <section class="container comparison-wrap" aria-label="Program comparison table">
+        <div class="comparison-header">
+          <h3>Comparison Table</h3>
+          <label class="toggle-row">
+            <input type="checkbox" id="hideSameRows" />
+            <span>Hide rows with identical values</span>
+          </label>
+        </div>
+        <div class="table-scroll">
+          <table id="comparisonTable">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="container workflows" aria-label="Advisor workflow">
+        <article class="workflow-card">
+          <h3>Send to Advisor</h3>
+          <p>Create a prefilled email with selected programs and your notes.</p>
+          <form id="advisorForm" class="advisor-form">
+            <label for="advisorName">Your name</label>
+            <input id="advisorName" name="advisorName" type="text" placeholder="Jane Smith" />
+
+            <label for="advisorEmail">Your email</label>
+            <input id="advisorEmail" name="advisorEmail" type="email" placeholder="jane@bu.edu" />
+
+            <input id="advisorRecipient" name="advisorRecipient" type="hidden" value="buvem@bu.edu" />
+
+            <label for="advisorNotes">Notes / questions</label>
+            <textarea id="advisorNotes" name="advisorNotes" rows="4" placeholder="What scholarships are available for part-time students?"></textarea>
+
+            <button id="sendAdvisor" class="btn" type="submit">Request Info</button>
+            <p class="consent-text">
+              I acknowledge that, by clicking the 'Request Info', I consent to representatives of Boston University and its partners contacting me about educational opportunities via email, text, or phone, at the phone number above, including my mobile phone, using an automatic dialer, or pre-recorded message. Message and data rates may apply. I understand that my consent is not a requirement for enrollment, and I may withdraw my consent at any time.
+            </p>
+          </form>
+        </article>
+      </section>
+
+      <section class="container note-block">
+        <h3>Data Notes</h3>
+        <p>
+          Program details are based on BU Online pages for the AI Programs hub and the Online MS in Data Science page
+          (captured February 25, 2026). Always confirm final details on each official program page.
+        </p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>Boston University Virtual | Program comparison prototype for prospective students</p>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
