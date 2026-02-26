@@ -126,22 +126,14 @@ const rowSchema = [
   ["completionTime", "Completion Time"],
   ["credits", "Credits"],
   ["tuition", "Estimated Tuition"],
-  ["costPerCredit", "Estimated Cost Per Credit"],
-  ["weeklyLoadFullTime", "Estimated Weekly Load (Full-Time)"],
-  ["weeklyLoadPartTime", "Estimated Weekly Load (Part-Time)"],
-  ["nextSession", "Next Session"],
   ["idealFor", "Ideal For"],
   ["skills", "Key Skills"],
   ["careers", "Career Paths"]
 ];
 
 function enrichProgram(program) {
-  const costPerCredit = Math.round(program.tuitionValue / program.credits);
   return {
-    ...program,
-    costPerCredit: `$${costPerCredit.toLocaleString()}`,
-    weeklyLoadFullTime: "16-22 hrs/week",
-    weeklyLoadPartTime: "8-12 hrs/week"
+    ...program
   };
 }
 
@@ -203,7 +195,6 @@ function renderCards() {
         <li><strong>Focus:</strong> ${program.focus}</li>
         <li><strong>Credits:</strong> ${program.credits}</li>
         <li><strong>Tuition:</strong> ${program.tuition}</li>
-        <li><strong>Per Credit:</strong> ${program.costPerCredit}</li>
       </ul>
       <div class="card-actions">
         <button class="compare-toggle${selected ? " active" : ""}" data-program-id="${program.id}" type="button">

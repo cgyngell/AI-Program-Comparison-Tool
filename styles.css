@@ -1,7 +1,7 @@
 :root {
   --bu-red: #cc0000;
   --bu-red-dark: #9f0000;
-  --bu-blue-900: #0e1a2b;
+  --bu-blue-900: #2d2926;
   --bu-blue-800: #162a42;
   --bu-blue-700: #274367;
   --bu-cream: #faf8f4;
@@ -10,7 +10,7 @@
   --card: #ffffff;
   --line: #d9dfe7;
   --radius: 14px;
-  --shadow: 0 12px 30px rgba(14, 26, 43, 0.12);
+  --shadow: 0 12px 30px rgba(45, 41, 38, 0.12);
 }
 
 * {
@@ -68,7 +68,7 @@ body {
 .hero {
   color: #fff;
   background:
-    linear-gradient(120deg, rgba(14, 26, 43, 0.95), rgba(22, 42, 66, 0.92)),
+    linear-gradient(120deg, rgba(45, 41, 38, 0.95), rgba(45, 41, 38, 0.88)),
     linear-gradient(30deg, rgba(204, 0, 0, 0.2), rgba(255, 255, 255, 0));
   padding: 2.8rem 0;
 }
