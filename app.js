@@ -3,7 +3,7 @@ const programs = [
     id: "ms-se-ai",
     title: "Online Master of Science in Software Engineering for Artificial Intelligence",
     credential: "Master's Degree",
-    school: "Metropolitan College",
+    school: "College of Engineering",
     focus: "Software Engineering for AI",
     format: "100% Online",
     completionTime: "16 months",
