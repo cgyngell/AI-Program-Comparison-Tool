@@ -59,8 +59,11 @@
           <h3>Send to Advisor</h3>
           <p>Send your selected programs and questions directly to an advisor.</p>
           <form id="advisorForm" class="advisor-form">
-            <label for="advisorName">Your name</label>
-            <input id="advisorName" name="advisorName" type="text" placeholder="Jane Smith" />
+            <label for="advisorFirstName">First name</label>
+            <input id="advisorFirstName" name="advisorFirstName" type="text" placeholder="Jane" required />
+
+            <label for="advisorLastName">Last name</label>
+            <input id="advisorLastName" name="advisorLastName" type="text" placeholder="Smith" required />
 
             <label for="advisorEmail">Your email</label>
             <input id="advisorEmail" name="advisorEmail" type="email" placeholder="jane@bu.edu" required />

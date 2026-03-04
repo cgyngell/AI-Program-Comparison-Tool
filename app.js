@@ -287,16 +287,17 @@ async function copyShareLink() {
   }
 }
 
-function buildAdvisorMailtoLink(recipient, selected, fromName, fromEmail, notes) {
+function buildAdvisorMailtoLink(recipient, selected, fromFirstName, fromLastName, fromEmail, notes) {
   const subject = "BU Online Program Information Request";
   const selectedList = selected.map((program) => `- ${program.title}`).join("\n");
+  const fullName = `${fromFirstName} ${fromLastName}`.trim();
   const body = [
     "Hello,",
     "",
     "I would like more information on the following BU Online programs:",
     selectedList,
     "",
-    `Name: ${fromName || "Not provided"}`,
+    `Name: ${fullName || "Not provided"}`,
     `Email: ${fromEmail || "Not provided"}`,
     "",
     "Notes:",
@@ -317,11 +318,17 @@ async function sendToAdvisor(event) {
   }
 
   const formData = new FormData(advisorForm);
-  const fromName = (formData.get("advisorName") || "").toString().trim();
+  const fromFirstName = (formData.get("advisorFirstName") || "").toString().trim();
+  const fromLastName = (formData.get("advisorLastName") || "").toString().trim();
   const fromEmail = (formData.get("advisorEmail") || "").toString().trim();
   const recipient = (formData.get("advisorRecipient") || "buvem@bu.edu").toString().trim();
   const notes = (formData.get("advisorNotes") || "").toString().trim();
   const honey = (formData.get("advisorCompany") || "").toString().trim();
+
+  if (!fromFirstName || !fromLastName) {
+    window.alert("Please enter first and last name.");
+    return;
+  }
 
   if (!fromEmail) {
     window.alert("Please enter your email address.");
@@ -334,12 +341,14 @@ async function sendToAdvisor(event) {
   advisorStatus.className = "advisor-status pending";
 
   const payload = {
-    fromName,
+    firstName: fromFirstName,
+    lastName: fromLastName,
     fromEmail,
     notes,
     honey,
     comparisonLink: window.location.href,
-    selectedPrograms: selected.map((program) => program.title)
+    selectedPrograms: selected.map((program) => program.title),
+    selectedProgramKeys: selected.map((program) => program.id)
   };
 
   try {
@@ -363,7 +372,7 @@ async function sendToAdvisor(event) {
   } catch (error) {
     advisorStatus.textContent = "Direct send unavailable. Opening your email app as fallback...";
     advisorStatus.className = "advisor-status error";
-    const mailtoLink = buildAdvisorMailtoLink(recipient, selected, fromName, fromEmail, notes);
+    const mailtoLink = buildAdvisorMailtoLink(recipient, selected, fromFirstName, fromLastName, fromEmail, notes);
     window.location.href = mailtoLink;
   } finally {
     sendAdvisorBtn.disabled = false;
